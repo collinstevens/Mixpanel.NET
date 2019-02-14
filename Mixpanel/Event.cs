@@ -72,8 +72,8 @@ namespace Mixpanel
                     .IsNotNull()
                     .IsNotEmpty()
                     .IsNotNullOrWhiteSpace()
-                    .DoesNotStartWith("mp_", "Properties for events may not start with \"mp_\" because they are reserved by Mixpanel.")
-                    .Evaluate(!ReservedProperties.Any(i => i.Equals(index)), $"{index} is a reserved property by Mixpanel");
+                    .DoesNotStartWith("mp_", StringComparison.CurrentCultureIgnoreCase, "Properties for events may not start with \"mp_\" because they are reserved by Mixpanel.")
+                    .Evaluate(!ReservedProperties.Any(i => i.Equals(index, StringComparison.CurrentCultureIgnoreCase)), $"{index} is a reserved property by Mixpanel");
 
                 SetProperty(index, value);
             }

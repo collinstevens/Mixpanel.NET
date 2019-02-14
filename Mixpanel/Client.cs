@@ -11,8 +11,6 @@ namespace Mixpanel
 {
     public class Client : IClient
     {
-        private static readonly JsonSerializerSettings JsonSerializerSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
-
         public Client(string token, HttpClient httpClient)
         {
             Condition.Requires(token, nameof(token)).IsNotNull().IsNotEmpty().IsNotNullOrWhiteSpace();
@@ -40,7 +38,7 @@ namespace Mixpanel
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            var serializedEvent = JsonConvert.SerializeObject(@event, Formatting.Indented, JsonSerializerSettings);
+            var serializedEvent = JsonConvert.SerializeObject(@event, Formatting.Indented);
 
             var eventBytes = Encoding.UTF8.GetBytes(serializedEvent);
 
