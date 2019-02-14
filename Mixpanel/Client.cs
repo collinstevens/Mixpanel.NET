@@ -17,6 +17,7 @@ namespace Mixpanel
         {
             Condition.Requires(token, nameof(token)).IsNotNull().IsNotEmpty().IsNotNullOrWhiteSpace();
             Condition.Requires(httpClient, nameof(httpClient)).IsNotNull();
+
             Token = token;
             HttpClient = httpClient;
         }
