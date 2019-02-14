@@ -6,7 +6,7 @@
 
   <PropertyGroup>
     <PackageId>NMixpanel</PackageId>
-    <PackageVersion></PackageVersion>
+    <PackageVersion>1.0.0.5</PackageVersion>
     <Authors>Collin Stevens</Authors>
     <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/collinstevens/NMixpanel</PackageProjectUrl>
