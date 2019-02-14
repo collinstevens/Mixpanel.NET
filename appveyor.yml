@@ -3,6 +3,14 @@ image: Visual Studio 2017
 branches:
   only:
     - master
+dotnet_csproj:
+  patch: true
+  file: "**\*.csproj"
+  version: "{version}"
+  package_version: "{version}"
+  assembly_version: "{version}"
+  file_version: "{version}"
+  informational_version: "{version}"
 init:
   - cmd: git config --global core.autocrlf true
 install:
