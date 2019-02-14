@@ -24,7 +24,7 @@ namespace Mixpanel
             get => Properties[index];
             set 
             {
-                Condition.Requires(index, nameof(index)).IsNotNull().IsNotEmpty().IsNotNullOrWhiteSpace().DoesNotStartWith("mp_", "Mixpanel properties for events may not start with \"mp_\".");
+                Condition.Requires(index, nameof(index)).IsNotNull().IsNotEmpty().IsNotNullOrWhiteSpace().DoesNotStartWith("mp_", "Properties for events may not start with \"mp_\" because they are reserved by Mixpanel.");
 
                 Properties[index] = value;
             }
