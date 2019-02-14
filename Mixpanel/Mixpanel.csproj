@@ -4,6 +4,18 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <PackageId>NMixpanel</PackageId>
+    <Authors>Collin Stevens</Authors>
+    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/collinstevens/Mixpanel.NET</PackageProjectUrl>
+    <PackageIconUrl>https://theme.zdassets.com/theme_assets/1803046/72ca0c4f05a3036678663ce1207bea7576f28250.png</PackageIconUrl>
+    <RepositoryUrl>https://github.com/collinstevens/Mixpanel.NET</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="CuttingEdge.Conditions" Version="1.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
