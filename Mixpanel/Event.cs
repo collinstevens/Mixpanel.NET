@@ -87,7 +87,7 @@ namespace Mixpanel
             {
                 dateTime = dateTime.ToUniversalTime();
 
-                var datePart = dateTime.ToString("yyyy-MM-DD");
+                var datePart = dateTime.ToString("yyyy-MM-dd");
 
                 var timePart = dateTime.ToString("HH:mm:ss");
 
