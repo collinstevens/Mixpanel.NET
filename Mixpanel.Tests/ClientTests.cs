@@ -44,7 +44,7 @@ namespace Mixpanel.Tests
         {
             IClient client = new Client(EmptyToken, EmptyHttpClientMock.Object);
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.TrackAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.TrackAsync(null).ConfigureAwait(false));
         }
 
         [Fact]
@@ -62,7 +62,9 @@ namespace Mixpanel.Tests
 
             var @event = client.CreateEvent();
 
-            await client.TrackAsync(@event);
+            var successful = await client.TrackAsync(@event).ConfigureAwait(false);
+
+            Assert.True(successful);
 
             httpMessageHandlerMock.Protected().Verify("SendAsync", Times.Once(), ItExpr.Is<HttpRequestMessage>(request => request.Method == HttpMethod.Get), ItExpr.IsAny<CancellationToken>());
         }

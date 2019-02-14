@@ -18,7 +18,7 @@ namespace Mixpanel.IntegrationTests
 
             @event.Name = nameof(TrackAsync_CanSendSingleEvent);
 
-            var successful = await client.TrackAsync(@event);
+            var successful = await client.TrackAsync(@event).ConfigureAwait(false);
 
             Assert.True(successful);
         }

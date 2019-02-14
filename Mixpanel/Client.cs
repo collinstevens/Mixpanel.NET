@@ -48,11 +48,11 @@ namespace Mixpanel
 
             var uri = new Uri(TrackUri, $"?data={base64}");
 
-            var response = await HttpClient.GetAsync(uri, cancellationToken);
+            var response = await HttpClient.GetAsync(uri, cancellationToken).ConfigureAwait(false);
 
             response.EnsureSuccessStatusCode();
 
-            var content = await response.Content.ReadAsStringAsync();
+            var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             return content.Equals("1");
         }
