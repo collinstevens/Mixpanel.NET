@@ -14,13 +14,28 @@ namespace Mixpanel.IntegrationTests
         {
             var client = new Client(Token, new HttpClient());
 
-            var @event = client.CreateEvent();
+            var mixpanelEvent = client.CreateEvent();
+            
+            mixpanelEvent.Name = nameof(TrackAsync_CanSendSingleEvent);
 
-            @event.Name = nameof(TrackAsync_CanSendSingleEvent);
+            var outcome = await client.TrackAsync(mixpanelEvent, true).ConfigureAwait(false);
 
-            var successful = await client.TrackAsync(@event).ConfigureAwait(false);
+            Assert.True(outcome.Successful);
+        }
 
-            Assert.True(successful);
+        [Fact]
+        public async Task TrackAsync_CanSendSingleEvent_WithDateTimeProperty()
+        {
+            var client = new Client(Token, new HttpClient());
+
+            var mixpanelEvent = client.CreateEvent();
+
+            mixpanelEvent.Name = nameof(TrackAsync_CanSendSingleEvent_WithDateTimeProperty);
+            mixpanelEvent["DateTimeProperty"] = DateTime.Now;
+
+            var outcome = await client.TrackAsync(mixpanelEvent, true).ConfigureAwait(false);
+
+            Assert.True(outcome.Successful);
         }
     }
 }

@@ -30,29 +30,48 @@ namespace Mixpanel
 
         public Event CreateEvent() => new Event(Token);
 
-        public async Task<bool> TrackAsync(Event @event) => await TrackAsync(@event, CancellationToken.None);
+        public async Task<TrackingOutcome> TrackAsync(Event @event) => await TrackAsync(@event, false, CancellationToken.None).ConfigureAwait(false);
 
-        public async Task<bool> TrackAsync(Event @event, CancellationToken cancellationToken)
+        public async Task<TrackingOutcome> TrackAsync(Event @event, CancellationToken cancellationToken) => await TrackAsync(@event, false, cancellationToken).ConfigureAwait(false);
+
+        public async Task<TrackingOutcome> TrackAsync(Event @event, bool verbose) => await TrackAsync(@event, verbose, CancellationToken.None).ConfigureAwait(false);
+
+        public async Task<TrackingOutcome> TrackAsync(Event @event, bool verbose, CancellationToken cancellationToken)
         {
             Condition.Requires(@event, nameof(@event)).IsNotNull();
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            var serializedEvent = JsonConvert.SerializeObject(@event, Formatting.Indented);
+            var serializedEvent = JsonConvert.SerializeObject(@event);
 
             var eventBytes = Encoding.UTF8.GetBytes(serializedEvent);
 
             var base64 = Convert.ToBase64String(eventBytes);
 
-            var uri = new Uri(TrackUri, $"?data={base64}");
+            var verbosePart = verbose ? "&verbose=1" : string.Empty;
+
+            var relativeUri = $"?data={base64}{verbosePart}";
+
+            var uri = new Uri(TrackUri, relativeUri);
 
             var response = await HttpClient.GetAsync(uri, cancellationToken).ConfigureAwait(false);
 
             response.EnsureSuccessStatusCode();
 
-            var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            if (verbose)
+            {
+                var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            return content.Equals("1");
+                var trackingResponse = JsonConvert.DeserializeObject<TrackingResponse>(content);
+
+                return new TrackingOutcome(verbose, trackingResponse.Status.ToString(), trackingResponse.Error);
+            }
+            else
+            {
+                var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                return new TrackingOutcome(verbose, content, null);
+            }
         }
     }
 }

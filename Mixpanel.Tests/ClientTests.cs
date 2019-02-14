@@ -62,9 +62,9 @@ namespace Mixpanel.Tests
 
             var @event = client.CreateEvent();
 
-            var successful = await client.TrackAsync(@event).ConfigureAwait(false);
+            var outcome = await client.TrackAsync(@event).ConfigureAwait(false);
 
-            Assert.True(successful);
+            Assert.True(outcome.Successful);
 
             httpMessageHandlerMock.Protected().Verify("SendAsync", Times.Once(), ItExpr.Is<HttpRequestMessage>(request => request.Method == HttpMethod.Get), ItExpr.IsAny<CancellationToken>());
         }

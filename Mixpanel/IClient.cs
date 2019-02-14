@@ -7,8 +7,12 @@ namespace Mixpanel
     {
         Event CreateEvent();
 
-        Task<bool> TrackAsync(Event @event);
+        Task<TrackingOutcome> TrackAsync(Event @event);
 
-        Task<bool> TrackAsync(Event @event, CancellationToken cancellationToken);
+        Task<TrackingOutcome> TrackAsync(Event @event, CancellationToken cancellationToken);
+
+        Task<TrackingOutcome> TrackAsync(Event @event, bool verbose);
+
+        Task<TrackingOutcome> TrackAsync(Event @event, bool verbose, CancellationToken cancellationToken);
     }
 }

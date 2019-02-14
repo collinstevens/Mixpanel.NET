@@ -9,7 +9,7 @@ namespace Mixpanel
     public class Event
     {
         private static readonly string[] ReservedProperties = new[] { "distinct_id", "token", "time", "ip", "$insert_id" };
-
+        
         internal Event(string token)
         {
             Condition.Requires(token, nameof(token)).IsNotNull().IsNotEmpty().IsNotNullOrWhiteSpace();
@@ -17,7 +17,7 @@ namespace Mixpanel
             SerializedProperties.Add("token", token);
         }
 
-        [JsonProperty("Event")]
+        [JsonProperty("event")]
         public string Name { get; set; }
 
         [JsonIgnore]
@@ -60,30 +60,30 @@ namespace Mixpanel
 
         private Dictionary<string, object> OriginalProperties { get; } = new Dictionary<string, object>();
 
-        [JsonProperty("Properties")]
+        [JsonProperty("properties")]
         internal Dictionary<string, object> SerializedProperties { get; } = new Dictionary<string, object>();
 
-        public object this[string index]
+        public object this[string propertyName]
         {
-            get => SerializedProperties[index];
+            get => SerializedProperties[propertyName];
             set
             {
-                Condition.Requires(index, nameof(index))
+                Condition.Requires(propertyName, nameof(propertyName))
                     .IsNotNull()
                     .IsNotEmpty()
                     .IsNotNullOrWhiteSpace()
                     .DoesNotStartWith("mp_", StringComparison.CurrentCultureIgnoreCase, "Properties for events may not start with \"mp_\" because they are reserved by Mixpanel.")
-                    .Evaluate(!ReservedProperties.Any(i => i.Equals(index, StringComparison.CurrentCultureIgnoreCase)), $"{index} is a reserved property by Mixpanel");
+                    .Evaluate(!ReservedProperties.Any(i => i.Equals(propertyName, StringComparison.CurrentCultureIgnoreCase)), $"{propertyName} is a reserved property by Mixpanel");
 
-                SetProperty(index, value);
+                SetProperty(propertyName, value);
             }
         }
 
-        private void SetProperty(string index, object value)
+        private void SetProperty(string propertyName, object propertyValue)
         {
-            OriginalProperties[index] = value;
+            OriginalProperties[propertyName] = propertyValue;
 
-            if (value is DateTime dateTime)
+            if (propertyValue is DateTime dateTime)
             {
                 dateTime = dateTime.ToUniversalTime();
 
@@ -91,12 +91,12 @@ namespace Mixpanel
 
                 var timePart = dateTime.ToString("HH:mm:ss");
 
-                SerializedProperties[index] = $"{datePart}T{timePart}";
+                SerializedProperties[propertyName] = $"{datePart}T{timePart}";
 
                 return;
             }
 
-            SerializedProperties[index] = value;
+            SerializedProperties[propertyName] = propertyValue;
         }
     }
 }
