@@ -8,9 +8,9 @@
     <PackageId>NMixpanel</PackageId>
     <Authors>Collin Stevens</Authors>
     <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/collinstevens/Mixpanel.NET</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/collinstevens/NMixpanel</PackageProjectUrl>
     <PackageIconUrl>https://theme.zdassets.com/theme_assets/1803046/72ca0c4f05a3036678663ce1207bea7576f28250.png</PackageIconUrl>
-    <RepositoryUrl>https://github.com/collinstevens/Mixpanel.NET</RepositoryUrl>
+    <RepositoryUrl>https://github.com/collinstevens/NMixpanel</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
