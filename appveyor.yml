@@ -2,11 +2,11 @@ version: "1.0.{build}"
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
-  version: "{version}"
-  package_version: "{version}"
-  assembly_version: "{version}"
-  file_version: "{version}"
-  informational_version: "{version}"
+  version: "{build}"
+  package_version: "{build}"
+  assembly_version: "{build}"
+  file_version: "{build}"
+  informational_version: "{build}"
 
 image: Visual Studio 2017
 branches:
