@@ -6,19 +6,19 @@ using Xunit;
 
 namespace Mixpanel.Tests
 {
-    public class EventTests
+    public class MixpanelEventTests
     {
         public Mock<HttpClient> EmptyHttpClientMock { get; }
 
         public string EmptyToken { get; }
 
-        public IClient EmptyClient { get; set; }
+        public IMixpanelClient EmptyClient { get; set; }
 
-        public EventTests()
+        public MixpanelEventTests()
         {
             EmptyHttpClientMock = new Mock<HttpClient>(MockBehavior.Strict);
             EmptyToken = "token";
-            EmptyClient = new Client(EmptyToken, EmptyHttpClientMock.Object);
+            EmptyClient = new MixpanelClient(EmptyToken, EmptyHttpClientMock.Object);
         }
 
         [Fact]

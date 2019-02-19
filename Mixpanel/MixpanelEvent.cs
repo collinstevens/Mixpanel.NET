@@ -6,11 +6,11 @@ using System.Linq;
 
 namespace Mixpanel
 {
-    public class Event
+    public class MixpanelEvent
     {
         private static readonly string[] ReservedProperties = new[] { "distinct_id", "token", "time", "ip", "$insert_id" };
         
-        internal Event(string token)
+        internal MixpanelEvent(string token)
         {
             Condition.Requires(token, nameof(token)).IsNotNull().IsNotEmpty().IsNotNullOrWhiteSpace();
 

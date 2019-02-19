@@ -9,40 +9,40 @@ using Xunit;
 
 namespace Mixpanel.Tests
 {
-    public class ClientTests
+    public class MixpanelClientTests
     {
         public Mock<HttpClient> EmptyHttpClientMock { get; }
 
         public string EmptyToken { get; }
 
-        public ClientTests()
+        public MixpanelClientTests()
         {
             EmptyHttpClientMock = new Mock<HttpClient>(MockBehavior.Strict);
             EmptyToken = "token";
         }
 
         [Fact]
-        public void Constructor_ThrowsArgumentNullException_WhenTokenIsNull() => Assert.Throws<ArgumentNullException>(() => new Client(null, EmptyHttpClientMock.Object));
+        public void Constructor_ThrowsArgumentNullException_WhenTokenIsNull() => Assert.Throws<ArgumentNullException>(() => new MixpanelClient(null, EmptyHttpClientMock.Object));
 
         [Fact]
-        public void Constructor_ThrowsArgumentNullException_WhenTokenIsEmpty() => Assert.Throws<ArgumentException>(() => new Client(string.Empty, EmptyHttpClientMock.Object));
+        public void Constructor_ThrowsArgumentNullException_WhenTokenIsEmpty() => Assert.Throws<ArgumentException>(() => new MixpanelClient(string.Empty, EmptyHttpClientMock.Object));
 
         [Fact]
-        public void Constructor_ThrowsArgumentException_WhenTokenIsWhiteSpace() => Assert.Throws<ArgumentException>(() => new Client(" ", EmptyHttpClientMock.Object));
+        public void Constructor_ThrowsArgumentException_WhenTokenIsWhiteSpace() => Assert.Throws<ArgumentException>(() => new MixpanelClient(" ", EmptyHttpClientMock.Object));
 
         [Fact]
-        public void Constructor_ThrowsArgumentNullException_WhenHttpClientIsNull() => Assert.Throws<ArgumentNullException>(() => new Client(EmptyToken, null));
+        public void Constructor_ThrowsArgumentNullException_WhenHttpClientIsNull() => Assert.Throws<ArgumentNullException>(() => new MixpanelClient(EmptyToken, null));
 
         [Fact]
         public void Constructor_Constructs()
         {
-            IClient client = new Client(EmptyToken, EmptyHttpClientMock.Object);
+            IMixpanelClient client = new MixpanelClient(EmptyToken, EmptyHttpClientMock.Object);
         }
 
         [Fact]
         public void TrackAsync_ThrowsArgumentNullException_WhenEventIsNull()
         {
-            IClient client = new Client(EmptyToken, EmptyHttpClientMock.Object);
+            IMixpanelClient client = new MixpanelClient(EmptyToken, EmptyHttpClientMock.Object);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => await client.TrackAsync(null).ConfigureAwait(false));
         }
@@ -58,7 +58,7 @@ namespace Mixpanel.Tests
 
             var httpClient = new HttpClient(httpMessageHandlerMock.Object);
 
-            IClient client = new Client(EmptyToken, httpClient);
+            IMixpanelClient client = new MixpanelClient(EmptyToken, httpClient);
 
             var @event = client.CreateEvent();
 
