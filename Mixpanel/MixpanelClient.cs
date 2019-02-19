@@ -43,7 +43,7 @@ namespace Mixpanel
 
             var base64 = Convert.ToBase64String(eventBytes);
 
-            var relativeUri = $"?data={base64}\"&verbose=1\"";
+            var relativeUri = $"?data={base64}&verbose=1";
 
             var uri = new Uri(TrackUri, relativeUri);
 
